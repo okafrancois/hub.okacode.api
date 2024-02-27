@@ -11,33 +11,34 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  username   String       @unique
-  name       String?
-  password   String
-  ressources Ressource[]
-  Collection Collection[]
+  id          String       @id @unique @default(uuid())
+  email       String       @unique
+  username    String       @unique
+  firstName   String?
+  lastName    String?
+  password    String
+  ressources  Ressource[]
+  collections Collection[]
 }
 
 model Ressource {
-  id           Int         @id @default(autoincrement())
+  id           String      @id @unique @default(uuid())
   title        String
   description  String
   url          String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   author       User        @relation(fields: [authorId], references: [id])
-  authorId     Int
+  authorId     String
   Collection   Collection? @relation(fields: [collectionId], references: [id])
-  collectionId Int?
+  collectionId String?
 }
 
 model Collection {
-  id          Int         @id @default(autoincrement())
+  id          String      @id @unique @default(uuid())
   title       String
   description String
   ressources  Ressource[]
   author      User        @relation(fields: [authorId], references: [id])
-  authorId    Int
+  authorId    String
 }
